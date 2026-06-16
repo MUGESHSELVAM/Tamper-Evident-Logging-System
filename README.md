@@ -290,7 +290,7 @@ For issues:
 
 ## 📄 License
 
-[Your License Here]
+MIT License
 
 ---
 
