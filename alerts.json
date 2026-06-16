@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "timestamp": "2026-04-15T21:06:33.680120",
+        "event": "ALERT",
+        "description": "500: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.",
+        "ip": "127.0.0.1",
+        "status": "ACTIVE",
+        "acknowledged": false
+    },
+    {
+        "id": 2,
+        "timestamp": "2026-04-16T14:06:12.100199",
+        "event": "ALERT",
+        "description": "Failed admin login attempt",
+        "ip": "127.0.0.1",
+        "status": "ACTIVE",
+        "acknowledged": false
+    },
+    {
+        "id": 3,
+        "timestamp": "2026-04-16T14:06:16.597655",
+        "event": "ALERT",
+        "description": "Failed admin login attempt",
+        "ip": "127.0.0.1",
+        "status": "ACTIVE",
+        "acknowledged": false
+    },
+    {
+        "id": 4,
+        "timestamp": "2026-04-16T14:06:24.252424",
+        "event": "ALERT",
+        "description": "Failed admin login attempt",
+        "ip": "127.0.0.1",
+        "status": "ACTIVE",
+        "acknowledged": false
+    }
+]

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamper-Evident Logging System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature {
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button, a.btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .alerts {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 28px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🛡️ Tamper-Evident Logging System</h1>
+        <p>Cryptographic Integrity Verification & Real-time Monitoring</p>
+    </header>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alerts">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Introduction -->
+        <div class="section">
+            <h2>Welcome</h2>
+            <p>A professional logging system with cryptographic hash verification, tamper detection, and real-time monitoring. Every log entry is cryptographically verified and protected against unauthorized modification.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>🔗 Hash Chaining</h3>
+                    <p>Each log links to the previous one using SHA-256 cryptographic hashes</p>
+                </div>
+                <div class="feature">
+                    <h3>🔍 Tamper Detection</h3>
+                    <p>Instantly detect any unauthorized log modifications</p>
+                </div>
+                <div class="feature">
+                    <h3>📍 IP Tracking</h3>
+                    <p>Record origin IP address for all events</p>
+                </div>
+                <div class="feature">
+                    <h3>🚨 Alert System</h3>
+                    <p>Real-time notifications for critical events</p>
+                </div>
+                <div class="feature">
+                    <h3>📊 CSV Export</h3>
+                    <p>Download complete audit trail in CSV format</p>
+                </div>
+                <div class="feature">
+                    <h3>🔐 Admin Panel</h3>
+                    <p>Secure interface for monitoring and management</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Log Section -->
+        <div class="section">
+            <h2>📝 Log New Event</h2>
+            <form action="/add" method="post">
+                <div class="form-group">
+                    <label for="event">Event Type:</label>
+                    <input 
+                        type="text" 
+                        id="event" 
+                        name="event" 
+                        placeholder="e.g., LOGIN, UPLOAD, API_CALL" 
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="desc">Description:</label>
+                    <textarea 
+                        id="desc" 
+                        name="desc" 
+                        placeholder="Detailed description of the event..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit">➕ Log Event</button>
+            </form>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="section">
+            <h2>⚡ Quick Access</h2>
+            <div class="button-group">
+                <a href="/logs" class="btn">📋 View Logs</a>
+                <a href="/admin" class="btn">🔐 Admin Panel</a>
+                <a href="/export" class="btn">📥 Export CSV</a>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="section">
+            <h2>ℹ️ Security & Features</h2>
+            <p><strong>Hash Chaining:</strong> Each log entry includes a SHA-256 hash of the previous log. Any tampering breaks the chain and is immediately detected during verification.</p>
+            
+            <p style="margin-top: 20px;"><strong>Core Security Measures:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px; color: #666; line-height: 1.8;">
+                <li>SHA-256 cryptographic hash verification</li>
+                <li>Input validation and sanitization</li>
+                <li>Brute-force protection via rate limiting (5 attempts per 60 seconds)</li>
+                <li>IP address logging for audit trails</li>
+                <li>Real-time alert generation for critical events</li>
+                <li>Password-protected admin access</li>
+            </ul>
+            <div style="background: #f8f9fa; padding: 16px; border-radius: 6px; margin-top: 20px; border-left: 4px solid #007bff;">
+                <p style="margin: 0; font-weight: 600; color: #333;">
+                    🔒 Admin Password Configuration
+                </p>
+                <p style="margin-top: 10px; color: #555; font-size: 14px; line-height: 1.6;">
+                    The admin password must be configured using the 
+                    <code style="background: #fff; padding: 2px 6px; border-radius: 4px;">ADMIN_PASSWORD</code> 
+                    environment variable before running the application.
+                </p>
+                <p style="margin-top: 8px; color: #555; font-size: 14px;">
+                    <strong>Example:</strong>
+                    <code style="background: #fff; padding: 2px 6px; border-radius: 4px;">
+                        export ADMIN_PASSWORD="your_secure_password"
+                    </code>
+                </p>
+                <p style="margin-top: 10px; color: #999; font-size: 13px;">
+                    Avoid hardcoding credentials to maintain secure deployment practices.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>🛡️ Tamper-Evident Logging System | Secure Audit Logging Platform </p>
+        <p style="font-size: 12px; margin-top: 10px; opacity: 0.8;">All activity monitored, verified, and protected.</p>
+        <p style="margin-top: 10px; color: #666;">
+            This system simulates real-world secure audit logging and intrusion detection mechanisms used in enterprise environments.
+        </p>
+    </footer>
+</body>
+</html>

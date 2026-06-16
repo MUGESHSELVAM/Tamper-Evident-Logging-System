@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Logs - Tamper-Evident System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .status-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .status-secure {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-compromised {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        a, button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        a:hover, button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .logs-section {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logs-header {
+            background: #f9f9f9;
+            padding: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .logs-header h2 {
+            color: #333;
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f5f5f5;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #eee;
+            font-weight: 600;
+            color: #333;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        tbody tr:nth-child(odd) {
+            background: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #ffffff;
+        }
+
+        tr:hover {
+            background: #f0f0f0;
+        }
+
+        .event-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .event-alert {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .event-auth {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .event-info {
+            background: #d1ecff;
+            color: #004085;
+        }
+
+        .no-logs {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .footer a {
+            color: #667eea;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📋 Event Logs</h1>
+        <p>Verify Log Integrity with Hash Chain Confirmation</p>
+    </header>
+
+    <div class="container">
+        <!-- Integrity Status -->
+        <div class="status-section">
+            <h2>🔒 Verification Status</h2>
+            
+            {% if status %}
+                <span class="status-badge status-secure">✅ Verified Secure</span>
+            {% else %}
+                <span class="status-badge status-compromised">❌ Tampering Detected</span>
+            {% endif %}
+
+            <p style="margin-top: 15px; color: #666;">{{ message }}</p>
+            {% if not status %}
+                <p style="color: #d32f2f;"><strong>⚠ Tamper detected at log #{{ index }}</strong></p>
+            {% endif %}
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="/export">📥 Export CSV</a>
+            <a href="/admin">🔐 Admin Dashboard</a>
+            <a href="/">🏠 Home</a>
+        </div>
+
+        <!-- Logs Table -->
+        <div class="logs-section">
+            <div class="logs-header">
+                <h2>📊 Log Records ({{ total_logs }} total)</h2>
+            </div>
+
+            {% if logs %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Timestamp</th>
+                            <th>Event</th>
+                            <th>Description</th>
+                            <th>IP Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs %}
+                            <tr>
+                                <td><strong>{{ loop.index }}</strong></td>
+                                <td>{{ log.timestamp[:19] }}</td>
+                                <td>
+                                    {% if log.event == 'ALERT' %}
+                                        <span class="event-badge event-alert">{{ log.event }}</span>
+                                    {% elif log.event == 'AUTH' %}
+                                        <span class="event-badge event-auth">{{ log.event }}</span>
+                                    {% else %}
+                                        <span class="event-badge event-info">{{ log.event }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ log.description }}</td>
+                                <td>📍 {{ log.ip }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="no-logs">
+                    <p>📭 No logs yet</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="/">🏠 Home</a>
+        <a href="/admin">🔐 Admin</a>
+        <a href="/export">📥 Export</a>
+        <p style="margin-top: 15px; color: #666; font-size: 13px;">
+            This system simulates real-world secure audit logging and intrusion detection mechanisms used in enterprise environments.
+        </p>
+    </div>
+</body>
+</html>
